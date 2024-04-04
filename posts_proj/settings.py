@@ -125,7 +125,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'posts' / 'static',
-    BASE_DIR / 'profile' / 'static',
+    BASE_DIR / 'profiles' / 'static',
 ]
 
 # All media files the user uploads (images for this project).
