@@ -32,6 +32,12 @@ const getCookie = (name) => {
 }
 const csrftoken = getCookie('csrftoken');
 
+const deleted = localStorage.getItem('title')
+if (deleted) {
+    handleAlerts('danger', `Deleted "${deleted}"`)
+    localStorage.clear()
+}
+
 const likeUnlikePosts = () => {
     const likeUnlikeForms = [...document.getElementsByClassName('like-unlike-forms')]
     likeUnlikeForms.forEach(form => form.addEventListener('submit', e => {
@@ -147,7 +153,7 @@ postForm.addEventListener('submit', e => {
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-3">
-                                <a href="${url}${element.id}" class="btn btn-primary">Details</a>
+                                <a href="${url}${response.id}" class="btn btn-primary">Details</a>
                             </div>
 
                             <div class="col-3">
