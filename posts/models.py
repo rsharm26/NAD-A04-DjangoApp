@@ -9,7 +9,7 @@ class Post(models.Model):
     liked = models.ManyToManyField(User, blank=True) # Can have many users like a post but also none.
     author = models.ForeignKey(Profile, on_delete=models.CASCADE) # Must have an author profile per post (posts deleted if profile).
     updated = models.DateTimeField(auto_now=True)
-    create = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.title)
@@ -17,3 +17,6 @@ class Post(models.Model):
     @property
     def like_count(self):
         return self.liked.all().count()
+    
+    class Meta:
+        ordering = ("-created", )
