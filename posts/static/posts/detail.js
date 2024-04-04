@@ -1,5 +1,3 @@
-console.log("lolz...")
-
 const url = window.location.href + "data/"
 
 const backBtn = document.getElementById('back-btn')
@@ -18,7 +16,14 @@ $.ajax({
     url: url,
 
     success: function(response) {
-        console.log(response)
+        //console.log(response)
+        const data = response.data
+
+        if (data.logged_in === data.author) {
+            updateBtn.classList.remove('not-visible')
+            deleteBtn.classList.remove('not-visible')
+        }
+
         spinnerBox.classList.add('not-visible')
     },
 
