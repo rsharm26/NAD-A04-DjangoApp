@@ -2,4 +2,15 @@ console.log("Hello, world")
 
 const helloWorldDiv = document.getElementById("hello-world")
 
-helloWorldDiv.innerHTML = "<b>Hello, <i>world</i></b>"
+$.ajax({
+    type: 'GET',
+    url: '/hello-world/',
+
+    success: function(response) {
+        console.log('success', response.text)
+        helloWorldDiv.textContent = response.text
+    },
+    error: function(error) {
+        console.log("error", error)
+    }
+})
