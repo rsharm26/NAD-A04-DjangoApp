@@ -160,6 +160,7 @@ postForm.addEventListener('submit', e => {
 
             likeUnlikePosts();
             handleAlerts('success', 'New post added!')
+            postForm.reset()
         },
 
         error: function(error) {
@@ -168,7 +169,10 @@ postForm.addEventListener('submit', e => {
         }
     })
 
-    $('#addPostModal').modal('hide')
+    setTimeout(() => {
+        $('#addPostModal').modal('hide')
+    }, 50)
+    
 })
 
 getData()
