@@ -27,12 +27,12 @@ const getData = () => {
     
                             <div class="card-footer">
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <a href="#" class="btn btn-primary">Details</a>
                                     </div>
     
-                                    <div class="col-2">
-                                        <a href="#" class="btn btn-primary">Like</a>
+                                    <div class="col-3">
+                                        <a href="#" class="btn btn-primary">${element.liked ? 'Unlike' : 'Like'} (${element.count})</a>
                                     </div>
                                 </div> 
                             </div>

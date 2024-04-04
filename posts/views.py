@@ -21,6 +21,7 @@ def load_post_data_view(request, **kwargs):
             'title': obj.title, 
             'body': obj.body, 
             'liked': request.user in obj.liked.all(),
+            'count': obj.like_count,
             'author': obj.author.user.username
         } for obj in qs]
 
