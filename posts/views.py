@@ -37,6 +37,20 @@ def post_detail(request, pk):
 
     return render(request, 'posts/detail.html', context)
 
+def post_detail_view_data(request, pk):
+    # Same issue as above.
+    obj = Post.objects.get(pk=pk)
+
+    data = {
+        'id': obj.id,
+        'title': obj.title,
+        'body': obj.body,
+        'author': obj.author.user.username,
+        'logged_in': request.user.username 
+    }
+
+    return JsonResponse({'data': data})
+
 def load_post_data_view(request, **kwargs):
     # Basically, get data from posts[lower to upper], so we want to retrieve n number of posts for display.
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
