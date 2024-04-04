@@ -9,6 +9,8 @@ const postTitle = document.getElementById('id_title')
 const postBody = document.getElementById('id_body')
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
+const url = window.location.href
+
 // Basically the number of visible posts at a time (next n posts to display)
 let visible = 3
 
@@ -80,7 +82,7 @@ const getData = () => {
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-3">
-                                        <a href="#" class="btn btn-primary">Details</a>
+                                        <a href="${url}${element.id}" class="btn btn-primary">Details</a>
                                     </div>
     
                                     <div class="col-3">
@@ -145,7 +147,7 @@ postForm.addEventListener('submit', e => {
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-3">
-                                <a href="#" class="btn btn-primary">Details</a>
+                                <a href="${url}${element.id}" class="btn btn-primary">Details</a>
                             </div>
 
                             <div class="col-3">

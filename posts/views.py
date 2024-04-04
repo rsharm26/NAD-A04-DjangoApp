@@ -25,6 +25,18 @@ def post_list_and_create(request):
 
     return render(request, 'posts/main.html', context)
 
+def post_detail(request, pk):
+    # PROBLEM: objects.get() can raise an "ObjectDoesNotExist" exception.
+    obj = Post.objects.get(pk=pk)
+    form = PostForm()
+
+    context = {
+        'obj': obj,
+        'form': form
+    }
+
+    return render(request, 'posts/detail.html', context)
+
 def load_post_data_view(request, **kwargs):
     # Basically, get data from posts[lower to upper], so we want to retrieve n number of posts for display.
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
