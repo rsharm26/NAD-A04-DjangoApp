@@ -9,10 +9,16 @@ const postTitle = document.getElementById('id_title')
 const postBody = document.getElementById('id_body')
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
+const saveBtn = document.getElementById('save-btn')
+const closeBtns = [...document.getElementsByClassName('add-modal-close')]
+const dropzone = document.getElementById('my-dz')
+
 const url = window.location.href
 
 // Basically the number of visible posts at a time (next n posts to display)
 let visible = 3
+
+let newPostID = null
 
 // https://docs.djangoproject.com/en/5.0/howto/csrf/
 const getCookie = (name) => {
@@ -143,6 +149,7 @@ postForm.addEventListener('submit', e => {
 
         success: function(response) {
             //console.log(response)
+            newPostID = response.id
             postsBox.insertAdjacentHTML('afterbegin', `
                 <div class="card mb-2">
                     <div class="card-body">
@@ -168,7 +175,6 @@ postForm.addEventListener('submit', e => {
 
             likeUnlikePosts();
             handleAlerts('success', 'New post added!')
-            postForm.reset()
         },
 
         error: function(error) {
@@ -176,11 +182,33 @@ postForm.addEventListener('submit', e => {
             handleAlerts('danger', 'Sorry, something went wrong :(')
         }
     })
+})
 
-    setTimeout(() => {
-        $('#addPostModal').modal('hide')
-    }, 50)
-    
+
+saveBtn.addEventListener('click', () => {
+    dropzone.classList.remove('not-visible')
+})
+
+closeBtns.forEach(btn => btn.addEventListener('click', () => {
+    postForm.reset()
+
+    if (!dropzone.classList.contains('not-visible')) {
+        dropzone.classList.add('not-visible')
+    }
+}))
+
+Dropzone.autoDiscover = false
+const myDropzone = new Dropzone('#my-dz', {
+    url: 'upload/',
+    init: function() {
+        this.on('sending', function(file, xhr, formData) {
+            formData.append('csrfmiddlewaretoken', csrf)
+            formData.append('new_post_id', newPostID)
+        })
+    },
+    maxFiles: 5,
+    maxFilesSize: 4,
+    acceptedFiles: '.png, .jpg, .jpeg'
 })
 
 getData()
