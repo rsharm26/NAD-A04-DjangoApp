@@ -195,6 +195,9 @@ closeBtns.forEach(btn => btn.addEventListener('click', () => {
     if (!dropzone.classList.contains('not-visible')) {
         dropzone.classList.add('not-visible')
     }
+
+    const myDropzone = Dropzone.forElement("#my-dz")
+    myDropzone.removeAllFiles(true)
 }))
 
 Dropzone.autoDiscover = false
@@ -206,7 +209,7 @@ const myDropzone = new Dropzone('#my-dz', {
             formData.append('new_post_id', newPostID)
         })
     },
-    maxFiles: 5,
+    maxFiles: 3,
     maxFilesSize: 4,
     acceptedFiles: '.png, .jpg, .jpeg'
 })
