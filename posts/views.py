@@ -4,8 +4,10 @@ from django.http import HttpResponse, JsonResponse
 from .forms import PostForm
 from profiles.models import Profile
 from .utils import action_permission
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def post_list_and_create(request):
     form = PostForm(request.POST or None)
 
@@ -26,6 +28,7 @@ def post_list_and_create(request):
 
     return render(request, 'posts/main.html', context)
 
+@login_required
 def post_detail(request, pk):
     # PROBLEM: objects.get() can raise an "ObjectDoesNotExist" exception.
     obj = Post.objects.get(pk=pk)
@@ -38,6 +41,7 @@ def post_detail(request, pk):
 
     return render(request, 'posts/detail.html', context)
 
+@login_required
 def post_detail_view_data(request, pk):
     # Same issue as above.
     obj = Post.objects.get(pk=pk)
@@ -52,6 +56,7 @@ def post_detail_view_data(request, pk):
 
     return JsonResponse({'data': data})
 
+@login_required
 def load_post_data_view(request, **kwargs):
     # Basically, get data from posts[lower to upper], so we want to retrieve n number of posts for display.
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -73,6 +78,7 @@ def load_post_data_view(request, **kwargs):
 
         return JsonResponse({'data': data[lower:upper], 'size': size})
 
+@login_required
 def like_unlike_post(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest': # https://old.reddit.com/r/django/comments/rbewk0/what_is_the_recommended_way_of_knowing_if_a/
         pk = request.POST.get('pk')
@@ -86,7 +92,9 @@ def like_unlike_post(request):
             obj.liked.add(request.user)
         
         return JsonResponse({'liked': liked, 'count': obj.like_count})
-    
+
+@login_required
+@action_permission 
 def update_post(request, pk):
     obj = Post.objects.get(pk=pk)
     
@@ -100,6 +108,7 @@ def update_post(request, pk):
 
     return JsonResponse({'title': new_title, 'body': new_body})
 
+@login_required
 @action_permission
 def delete_post(request, pk):
     obj = Post.objects.get(pk=pk)
@@ -110,7 +119,7 @@ def delete_post(request, pk):
 
     return JsonResponse({'msg': 'Access denied'})
 
-
+@login_required
 def image_upload_view(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         img = request.FILES.get('file')
