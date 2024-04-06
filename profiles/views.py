@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Profile
-from forms import ProfileForm
+from .forms import ProfileForm
 from django.http import JsonResponse
 # Create your views here.
 
