@@ -85,24 +85,24 @@ const getData = () => {
     
                 response.data.forEach(element => {
                     postsBox.innerHTML += `
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">${element.title}</h5>
-                                <p class="card-text">${element.body}</p>
-                            </div>
-    
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <a href="${url}${element.id}" class="btn btn-primary">Details</a>
+                        <div class="container">
+                            <div class="row mb-5">
+                                <div class="col-lg-10">
+                                    <div class="card" style="background: rgb(80, 80, 80, .15);">
+                                        <a href="${url}${element.id}" class="btn">
+                                            <div class="card-body">
+                                                <h4 class="card-title">${element.title}</h4>
+                                                <p class="card-text">${element.body}</p>
+                                            </div>
+                                        </a>
                                     </div>
-    
-                                    <div class="col-3">
+                                </div>
+
+                                <div class="col-lg-2 d-flex align-items-center justify-content-center">
                                     <form class="like-unlike-forms" data-form-id="${element.id}">
-                                        <button href="#" class="btn btn-primary" id="like-unlike-${element.id}">${element.liked ? 'Unlike' : 'Like'} (${element.count})</button>
-                                    </form>
-                                    </div>
-                                </div> 
+                                        <button href="#" class="btn btn-dark" id="like-unlike-${element.id}">${element.liked ? 'Unlike' : 'Like'} (${element.count})</button>
+                                     </form>
+                                </div>
                             </div>
                         </div>
                     `
@@ -151,30 +151,31 @@ postForm.addEventListener('submit', e => {
             //console.log(response)
             newPostID = response.id
             postsBox.insertAdjacentHTML('afterbegin', `
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <h5 class="card-title">${response.title}</h5>
-                        <p class="card-text">${response.body}</p>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-3">
-                                <a href="${url}${response.id}" class="btn btn-primary">Details</a>
+                <div class="container">
+                    <div class="row mb-5">
+                        <div class="col-lg-10">
+                            <div class="card" style="background: rgb(80, 80, 80, .15);">
+                                <a href="${url}${response.id}" class="btn">
+                                    <div class="card-body">
+                                        <h4 class="card-title">${response.title}</h4>
+                                        <p class="card-text">${response.body}</p>
+                                    </div>
+                                </a>
                             </div>
+                        </div>
 
-                            <div class="col-3">
+                        <div class="col-lg-2 d-flex align-items-center justify-content-center">
                             <form class="like-unlike-forms" data-form-id="${response.id}">
-                                <button href="#" class="btn btn-primary" id="like-unlike-${response.id}">Like (0)</button>
+                                <button href="#" class="btn btn-dark" id="like-unlike-${response.id}">Like (0)</button>
                             </form>
-                            </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             `)
 
             likeUnlikePosts();
             handleAlerts('success', 'New post added!')
+            dropzone.classList.remove('not-visible')
         },
 
         error: function(error) {
@@ -184,10 +185,6 @@ postForm.addEventListener('submit', e => {
     })
 })
 
-
-saveBtn.addEventListener('click', () => {
-    dropzone.classList.remove('not-visible')
-})
 
 closeBtns.forEach(btn => btn.addEventListener('click', () => {
     postForm.reset()
